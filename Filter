@@ -36,7 +36,7 @@ void main()
 		if(p[i]==-1)
 			{break;}
 		i++;
-		p = realloc(p, i*8);	
+		p = realloc(p, i*sizeof(int);	
 	}
 	filter(prime, p, i);
 }
