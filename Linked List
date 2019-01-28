@@ -42,10 +42,10 @@ node *free_list(node *head)
 	return aux;
 }
 
-node *search(node *head, node *previous, int item)
+node *search(node *head, int item)
 {
 	if(head == NULL || head -> item == item) return head;
-	search(head -> next, head, item);	
+	search(head -> next, item);	
 }
 
 node *remove_item(node *head, int item)
