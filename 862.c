@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct node
 {
-	int item;
+	char item;
 	struct node *next;	
 	struct node *previous;
 };
@@ -12,7 +13,7 @@ typedef struct node node;
 
 node *create_list() {return NULL;}
 
-node *add_to_tail(node *tail, int item)
+node *add_to_tail(node *tail, char item)
 {
 	node *new_node = (node*) malloc(sizeof(node));
 	new_node -> item = item;
@@ -48,14 +49,13 @@ void main()
 {
 	node *head = create_list();
 	node *tail = NULL;
-	int item, i=0;
-	int trash;
+	int i;
 	char sequence[1000];
-	gets(sequence);
-	scanf("%c", &trash);
-	while(sequence[i] != '\0')
+	while(1)
 	{
-		head = sequence[i];
+		
+		gets(sequence);
+		if(strlen(sequence) == 1 && sequence[0] == '0') break;
 		if(head == NULL)
 		{
 			head = add_to_tail(head, item);
