@@ -45,25 +45,49 @@ node *free_list(node *head)
 	return aux;
 }
 
+void biggest_sequence(node *head)
+{
+	node *current;
+	int initial_position = 0;
+	int final_position = 0;
+	while(head != NULL)
+	{
+		if(current->next->item == current->item)
+			final_position++;
+		else	
+			{
+				initial_position++;
+				final_position = initial_position;
+			}
+		head = head->next;
+	}
+	printf("%d %d\n", initial_position, final_position);
+}
+
 void main()
 {
 	node *head = create_list();
 	node *tail = NULL;
 	int i;
+	int item;
 	char sequence[1000];
 	while(1)
 	{
 		
 		gets(sequence);
 		if(strlen(sequence) == 1 && sequence[0] == '0') break;
-		if(head == NULL)
-		{
-			head = add_to_tail(head, item);
-			tail = head;
+		for(i=0; i<strlen(sequence); i++)
+		{	
+			item = *(sequence + i);
+			if(head == NULL)
+			{
+				head = add_to_tail(head, item);
+				tail = head;
+			}
+			else
+				tail = add_to_tail(tail, item);
 		}
-		else
-			tail = add_to_tail(tail, item);
+		biggest_sequence(head);
 	}
-	print_forward(head);
 	head = free_list(head);
 }
