@@ -74,7 +74,10 @@ void main()
 			if(enter == 0)
 				enter = 1;
 			else
-				push(stack_back, ++b);	
+			{	
+				push(stack_back, ++b);
+				pop(stack_forward);
+			}		
 		}
 		else if(!strcmp(item, "BACK"))
 		{
