@@ -1,4 +1,3 @@
-/*STACK WITH LIST*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,31 +31,35 @@ int is_empty(stack *stack)
 
 void push(stack *stack, int item)
 {
-	node *new_top = (node*) malloc (sizeof(node));
+    node *new_top = (node*) malloc (sizeof(node));
 	new_top->item = item;
 	new_top->previous = stack->top;
 	stack->top = new_top;
 }
 
-void pop(stack *stack)
+void pop(stack *stack, int *command)
 {
-	node *current = (node*) malloc (sizeof(node));
+	
 	if(is_empty(stack))
-		return 0;//printf("Stack Underflow\n");
+		return 0;
 	else 
 	{
-		current = stack->top->previous;
+	    node *current = (node*) malloc (sizeof(node));
+	    current = stack->top->previous;
 		stack->top->previous = NULL;
 		stack->top = current;
+	    (*command)--;
 	}	
+
 }
 
 int peek(stack *stack)
 {
 	if(is_empty(stack))
-		return 0;//printf("Stack Underflow\n");
+		return 0;
 	else 
 		return stack->top->item;
+	
 }
 
 void main()
@@ -64,31 +67,34 @@ void main()
 	stack *stack_back = create_stack();
 	stack *stack_forward = create_stack();	
 	char item[10];
-	int b = 0;
+	int b = -1;
 	int f = 0;
 	int enter = 0;
-	while(scanf("%s", item) != EOF)
+	while(scanf("%s",&item) != EOF)
 	{
 		if(!strcmp(item, "ENTER"))
 		{	
 			if(enter == 0)
-				enter = 1;
+			{
+				enter=1; 
+				b++;
+			}
 			else
 			{	
 				push(stack_back, ++b);
-				pop(stack_forward);
-			}		
+				pop(stack_forward, &f);
+			}	
 		}
 		else if(!strcmp(item, "BACK"))
 		{
-			pop(stack_back);
-			push(stack_forward, ++f);
+		   pop(stack_back,&b);
+           push(stack_forward, ++f);
 		}
 		else if(!strcmp(item, "FORWARD"))
-		{	
-			pop(stack_forward);
-			push(stack_back, ++b);
-		}	 
+		{
+		   push(stack_back, ++b);
+		   pop(stack_forward, &f);
+		}	
 	}
 	printf("BACK: %d\n", peek(stack_back));
 	printf("FORWARD: %d\n", peek(stack_forward));
