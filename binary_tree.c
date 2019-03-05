@@ -52,6 +52,18 @@ btree *search(btree *bt, int item)
 		return search(bt->right, item);
 }
 
+int find(btree *bt, int item)
+{
+	if(bt == NULL) 
+		return 0;
+	else if(bt->item == item)
+		return 1;
+	else if(bt->item > item) 
+		find(bt->left, item);
+	else 
+		find(bt->right, item);
+}
+
 btree *add(btree *bt, int item)
 {
 	if(bt == NULL) 
@@ -104,23 +116,39 @@ void print_post_order(btree *bt)
 	}
 }
 
+int Frequence(btree *bt, int item, int *frequence)
+{
+	int f;
+	if(!is_empty(bt))
+	{
+		Frequence(bt->left, item, frequence);
+		if(item == bt->item)
+			*frequence += 1;
+		//printf("item: %d f = %d\n", bt->item, *frequence);
+		Frequence(bt->right, item, frequence);
+	}
+	return *frequence;
+
+}
+
 void main()
 {
 	btree *bt = create_empty_btree();
-	int n = 9;
+	int n;
 	int item;
-	//scanf("%d", &n);
+	scanf("%d", &n);
 	while(n--)
 	{
 		scanf("%d", &item);
-		bt = add(bt, item);
-		bt->nodes++;
+		if(!find(bt, item))
+		{	
+			bt = add(bt, item);
+			bt->nodes++;
+		}	
 	}
-	printf("Pre-Order:\n");
-	print_pre_order(bt);
-	printf("\nIn Order:\n");
-	print_in_order(bt);
-	printf("\nPost-Order:\n");
-	print_post_order(bt);
-	printf("\nNodes: %d\n", bt->nodes);
+	printf("%d\n", bt->nodes);
+	/*to calculate a frequence of an item in the tree*/
+	// scanf("%d", &item);
+	// int frequence = 0;
+	// printf("%d\n", Frequence(bt, item, &frequence));
 }
